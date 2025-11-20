@@ -1,98 +1,214 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
+import { useRouter } from "expo-router";
+import React, { useEffect, useState } from "react";
+import { StyleSheet, Text, View } from "react-native";
+import { Calendar } from "react-native-calendars";
+import Animated, {
+  Easing,
+  useAnimatedProps,
+  useSharedValue,
+  withTiming
+} from 'react-native-reanimated';
+import type { Linecap } from "react-native-svg";
+import { Circle, G, Svg, Text as SvgText } from 'react-native-svg';
 
-import { HelloWave } from '@/components/hello-wave';
-import ParallaxScrollView from '@/components/parallax-scroll-view';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { Link } from 'expo-router';
+export default function App() {
+  const [selectedDate, setSelectedDate] = useState<string>("");
+  const size = 250; // 円の大きさ
+  const strokeWidth = 20; // 円の太さ
+  const percentage = 65; // 表示したい割合（%）
 
-export default function HomeScreen() {
+  const radius = (size - strokeWidth) / 2;
+  const circumference = 2 * Math.PI * radius;
+  const strokeDashoffset = circumference * (1 - percentage / 100);
+  const router = useRouter();//画面移動するため
+  const topsize= 50;
+const circlePosition = {
+  top: size / 2-topsize ,
+};
+
+const progress = useSharedValue(0);
+
+const animatedProps = useAnimatedProps(() => ({
+    strokeDashoffset: circumference * (1 - progress.value),
+  }));
+
+const circle = {
+  background: {
+    cx: size / 2,
+    cy: size / 2,
+    r: radius,
+    stroke: "#e6e6e6",
+    strokeWidth: strokeWidth,
+    fill: "transparent",
+  },
+  circle: {
+    cx: size / 2,
+    cy: size / 2,
+    r: radius,
+    stroke: "skyblue",
+    strokeWidth: strokeWidth,
+    fill: "transparent",
+    strokeDasharray: circumference,
+    strokeDashoffset: strokeDashoffset,
+    strokeLinecap: "round"as Linecap,
+  },
+  AnimatedCircle:{
+  cx:size / 2,
+  cy:size / 2,
+  r:radius,
+  stroke:"skyblue",
+  strokeWidth:strokeWidth,
+  fill:"transparent",
+  strokeDasharray:circumference,
+  animatedProps:animatedProps ,// ここでアニメーションを反映
+  strokeLinecap:"round",
+  },
+
+  text: {
+  x: size / 2,                         // 横方向の中央
+  y: size / 2,                         // 縦方向の中央
+  fontSize: 100,                        // 文字サイズ
+  fill: "black",                       // 色
+  textAnchor: "middle" as const,       // 横方向中央揃え
+  alignmentBaseline: "middle" as const // 縦方向中央揃え
+},  text2: {
+  x: size / 2,                         // 横方向の中央
+  y: size / 2-60,                         // 縦方向の中央
+  fontSize: 20,                        // 文字サイズ
+  fill: "#000000ff",                       // 色
+  textAnchor: "middle" as const,       // 横方向中央揃え
+  alignmentBaseline: "middle" as const // 縦方向中央揃え
+},
+};
+
+//prrogressの値を保存.これは%の値の変化．
+
+
+//値が変更されたら見た目を変更．
+useEffect(() => {
+  progress.value = withTiming(percentage / 100, {
+    duration: 1500,
+    easing: Easing.out(Easing.exp),
+  });
+}, [percentage]);
+//円を作成し，アニメーションを追加．
+const AnimatedCircle = Animated.createAnimatedComponent(Circle);
+
+
+
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12',
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <Link href="/modal">
-          <Link.Trigger>
-            <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-          </Link.Trigger>
-          <Link.Preview />
-          <Link.Menu>
-            <Link.MenuAction title="Action" icon="cube" onPress={() => alert('Action pressed')} />
-            <Link.MenuAction
-              title="Share"
-              icon="square.and.arrow.up"
-              onPress={() => alert('Share pressed')}
-            />
-            <Link.Menu title="More" icon="ellipsis">
-              <Link.MenuAction
-                title="Delete"
-                icon="trash"
-                destructive
-                onPress={() => alert('Delete pressed')}
-              />
-            </Link.Menu>
-          </Link.Menu>
-        </Link>
+    <View style={styles.container}>{/*全体のレイアウト 今の場合， */}
+      <View style={{justifyContent: 'flex-start',flex:0.4,backgroundColor:'rgba(255, 255, 255, 1)'}}>
+      
+    <View style={{ flex: 1, marginTop: 50, alignItems: 'center' }}>
+      <Svg width={size} height={size}>
+         {/*<Rect
+    x={0}
+    y={0}
+    width={size}
+    height={size}
+    fill="lightgray"  // 背景色
+  /> */}
+        <G rotation="-90" origin={`${size/2}, ${size/2}`}>
+          {/* 背景の円 */}
+           <Circle {...circle.background} />
+           <Circle {...circle.circle} />
+        </G>
+        <SvgText {...circle.text2}>勝率</SvgText>
+        <SvgText {...circle.text}>75%</SvgText>
+        </Svg>
+            {/*<Text style={[styles.circle,circlePosition]}>75%</Text>*/}
+    </View>
 
-        <ThemedText>
-          {`Tap the Explore tab to learn more about what's included in this starter app.`}
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          {`When you're ready, run `}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+
+</View>
+
+<View style={{flex:0.3,backgroundColor:'#ffffffff'}}>
+      <View style = {{justifyContent: 'flex-end'}}>
+<Text style = {styles.result_month_text} >今月の利益</Text>
+
+ {/*<ここでやりたいこと→入力されたお金を参照→反映→それをpushすると保存される*/}
+{/* { money >= 0 ? (
+    <Text style={styles.result_month_text}>+{money}円</Text>
+  ) : (
+    <Text style={styles.result_month_text}>{money}円</Text>
+  )
+} */}
+
+
+<Text style = {styles.result_month_text} >+???円</Text>
+
+    </View >
+</View >
+<View style={{flex:0.4,backgroundColor:'#ffffffff'}}>
+<View style ={{justifyContent: 'flex-end'}}>
+      <Calendar
+        // 初期表示月を今日に設定
+        current={new Date().toISOString().split("T")[0]}
+        // ユーザーが日付をタップした時
+        onDayPress={(day) => {
+
+        
+          router.push(`/about/${day.day}`);//ここでページ遷移
+          
+          console.log("選択された日：", day);
+          setSelectedDate(day.dateString);
+        }}
+        // 選択された日付のスタイル
+        markedDates={{
+          [selectedDate]: {
+            selected: true,
+            marked: true,
+            selectedColor: "#1455d6ff"
+          }
+        }}
+        // カスタムテーマ（任意）
+        theme={{
+          backgroundColor: "#ffffff",
+          calendarBackground: "#ffffff",
+          textSectionTitleColor: "#b6c1cd",
+          selectedDayBackgroundColor: "#00adf5",
+          selectedDayTextColor: "#ffffff",
+          todayTextColor: "#00adf5",
+          dayTextColor: "#2d4150",
+          textDisabledColor: "#d9e1e8",
+          dotColor: "#00adf5",
+          selectedDotColor: "#ffffff",
+          arrowColor: "orange",
+          monthTextColor: "blue",
+          indicatorColor: "blue",
+        }}
+        style={styles.calendar}
+      />
+
+      {/* <Text style={styles.selectedText}>
+        選択日： {selectedDate || "なし"}
+      </Text> */}
+    </View>
+    </View>
+    </View>
   );
 }
 
+
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
+  container: { flex: 1, backgroundColor: "#fff" },
+  calendar: { marginBottom: 20,justifyContent: 'flex-end' },
+  selectedText: { fontSize: 18, textAlign: "center" },
+  circle:{position: "absolute", fontSize: 50, color: "black"},
+  result_month_position:{justifyContent: 'flex-end',
+     // 上寄せ（縦方向）
+    //alignItems: "flex-start",     // 左寄せ（横方向）
+    marginLeft:20},
+  result_month_text:{
+    fontSize:30,
+    color:"#ff0000ff",
+    textAlign: "center",
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
+  result_month_value:{
+    fontSize:30,
+    color:"#ff0000ff",
+    textAlign: "center",
   },
 });
+
