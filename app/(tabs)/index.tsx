@@ -10,6 +10,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import type { Linecap } from "react-native-svg";
 import { Circle, G, Svg, Text as SvgText } from 'react-native-svg';
+import Screen_animation from "./change_to_screen";
 
 export default function App() {
   const [selectedDate, setSelectedDate] = useState<string>("");
@@ -27,6 +28,11 @@ const circlePosition = {
 };
 
 const progress = useSharedValue(0);
+
+const [screen_animatiom_parameters ,set_screen_animation]= useState(false);
+
+
+const [routeDay,setRouteDay] = useState<number|null>(null);
 
 const animatedProps = useAnimatedProps(() => ({
     strokeDashoffset: circumference * (1 - progress.value),
@@ -97,6 +103,9 @@ const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 
 
   return (
+    <>
+
+    <Screen_animation route = {`/about/${routeDay}`} triger = {screen_animatiom_parameters} restriger= {()=>set_screen_animation(false)}>
     <View style={styles.container}>{/*全体のレイアウト 今の場合， */}
       <View style={{justifyContent: 'flex-start',flex:0.4,backgroundColor:'rgba(255, 255, 255, 1)'}}>
       
@@ -147,9 +156,10 @@ const AnimatedCircle = Animated.createAnimatedComponent(Circle);
         current={new Date().toISOString().split("T")[0]}
         // ユーザーが日付をタップした時
         onDayPress={(day) => {
-
-        
-          router.push(`/about/${day.day}`);//ここでページ遷移
+          set_screen_animation(true);
+          setRouteDay(day.day);
+          //set_screen_animation(false);//これが悪さしている。なぜ？pageが変わる前にfalseになっている？
+          //router.push(`/about/${day.day}`);//ここでページ遷移
           
           console.log("選択された日：", day);
           setSelectedDate(day.dateString);
@@ -187,6 +197,9 @@ const AnimatedCircle = Animated.createAnimatedComponent(Circle);
     </View>
     </View>
     </View>
+    </Screen_animation>
+
+     </>
   );
 }
 
