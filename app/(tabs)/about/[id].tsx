@@ -5,9 +5,13 @@ import { StyleSheet, Text, View } from 'react-native';
 
 
 export default function dayscrren() {
-  const { id } = useLocalSearchParams();
+  const { id ,month} = useLocalSearchParams();
   return (
     <>
+    <View style={styles.days}>
+       <Text style={[styles.text,{marginTop:150}]}> {month}月{id}日</Text>
+      
+    </View>
       <Stack.Screen 
         options={{
           headerTitle: `2025年: ${id}日`, 
@@ -23,13 +27,20 @@ export default function dayscrren() {
 }
 
 const styles = StyleSheet.create({
+  days:{
+    flex:1,
+    backgroundColor: '#ffffffff',
+    justifyContent:'flex-start',
+    alignItems:'center'
+
+  },
   container: {
     flex: 1,
-    backgroundColor: '#25292e',
+    backgroundColor: '#ffffffff',
     justifyContent: 'center',
     alignItems: 'center',
   },
   text: {
-    color: '#fff',
+    color: '#000000ff',
   },
 });

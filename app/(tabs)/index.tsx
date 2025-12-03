@@ -32,7 +32,9 @@ const progress = useSharedValue(0);
 const [screen_animatiom_parameters ,set_screen_animation]= useState(false);
 
 
-const [routeDay,setRouteDay] = useState<number|null>(null);
+const [routeDay,setRouteDay] = useState(0);
+
+const [routeMonth,setRouteMonth] = useState(0);
 
 const animatedProps = useAnimatedProps(() => ({
     strokeDashoffset: circumference * (1 - progress.value),
@@ -102,10 +104,11 @@ const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 
 
 
+
   return (
     <>
 
-    <Screen_animation route = {`/about/${routeDay}`} triger = {screen_animatiom_parameters} restriger= {()=>set_screen_animation(false)}>
+    <Screen_animation route = {routeDay} triger = {screen_animatiom_parameters} month={routeMonth} restriger= {()=>set_screen_animation(false)}>
     <View style={styles.container}>{/*全体のレイアウト 今の場合， */}
       <View style={{justifyContent: 'flex-start',flex:0.4,backgroundColor:'rgba(255, 255, 255, 1)'}}>
       
@@ -160,7 +163,7 @@ const AnimatedCircle = Animated.createAnimatedComponent(Circle);
           setRouteDay(day.day);
           //set_screen_animation(false);//これが悪さしている。なぜ？pageが変わる前にfalseになっている？
           //router.push(`/about/${day.day}`);//ここでページ遷移
-          
+          setRouteMonth(day.month);
           console.log("選択された日：", day);
           setSelectedDate(day.dateString);
         }}
