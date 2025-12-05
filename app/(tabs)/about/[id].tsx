@@ -1,6 +1,6 @@
 import { useLocalSearchParams } from "expo-router";
 import React, { useState } from "react";
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, } from 'react-native';
 import { TextInput } from "react-native-gesture-handler";
 
 
@@ -12,16 +12,11 @@ export default function dayscrren() {
     <>
     <View style={styles.days}>
        <Text style={[styles.monthtext,{marginTop:150},]}> {month}月{id}日</Text>
-      
-    
-<TextInput 
-style ={styles.inputtext}
-value = {name}
-onChangeText={setName}
-placeholder="金額を入力してください"
-></TextInput>
-
+       <Text></Text>
     </View>
+
+
+
       {/* <Stack.Screen 
         options={{
           headerTitle: `2025年: ${id}日`, 
@@ -30,9 +25,23 @@ placeholder="金額を入力してください"
 
 
 
+<View style={styles.percent}>
+  <View style = {styles.percentbox}>
+   <Text style = {styles.percenttext}>今月の収支</Text>
+  </View>
+  
+  <View style = {styles.percentbox}>
+   <Text style = {styles.percenttext}>前日比</Text>
+  </View>
+</View>
       <View style={styles.container}>
-        <Text style={styles.text}> {id}日です</Text>
-        <Text>{id}</Text>
+<TextInput 
+style ={styles.inputtext}
+value = {name}
+onChangeText={setName}
+placeholder="金額を入力してください"
+></TextInput>
+
       </View>
     </>
   );
@@ -40,15 +49,32 @@ placeholder="金額を入力してください"
 
 const styles = StyleSheet.create({
   days:{
-    flex:1,
-    backgroundColor: '#ffffffff',
+    flex:0.3,
+    backgroundColor: '#5c70efff',
     justifyContent:'flex-start',
     alignItems:'center',
-
+  },
+  percent:{
+    flex:0.4,
+    backgroundColor: '#315071ff',
+    flexDirection: 'row',
+    justifyContent: 'center',// ← 横方向の真ん中
+    
+  },
+    percentbox:{
+    flex:0.5,
+    backgroundColor: '#315071ff',
+    flexDirection: 'row',
+    justifyContent: 'center',// ← 横方向の真ん中
+    
+  },
+    percenttext:{
+    color: '#000000ff',
+    fontSize:30,
   },
   container: {
-    flex: 1,
-    backgroundColor: '#ffffffff',
+    flex: 0.3,
+    backgroundColor: '#555b67ff',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -59,6 +85,10 @@ const styles = StyleSheet.create({
     inputtext: {
     color: '#000000ff',
     fontSize:20,
+    borderWidth: 1,
+    borderColor: "#999",
+    padding: 10,
+    borderRadius: 6,
   },
     text: {
     color: '#000000ff',
