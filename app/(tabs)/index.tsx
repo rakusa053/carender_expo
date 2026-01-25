@@ -1,5 +1,5 @@
-import Circle_display from "@/components/ui/circle";
-import Make_calender from "@/components/ui/make_calender";
+import Circle_animation from "@/components/ui/circle_animated";
+import Make_calender from "@/components/ui/Make_calender";
 import React, { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { DateData } from "react-native-calendars";
@@ -29,7 +29,7 @@ const setcalender = (day:DateData)=>{
     <>
 <Screen_animation route = {routeDay} triger = {screen_animatiom_parameters} month={routeMonth} restriger= {()=>set_screen_animation(false)}>
 <View style={styles.container}>{/*全体のレイアウト 今の場合， */}
-    <Circle_display size={250}/>
+    <Circle_animation size={250}/>
           <View style={{flex:0.3,backgroundColor:'#ffffffff'}}>
             <View style = {{justifyContent: 'flex-end'}}>
                   <Text style = {styles.result_month_text} >今月の利益</Text>

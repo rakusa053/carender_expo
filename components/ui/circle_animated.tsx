@@ -5,13 +5,11 @@ import Animated, {
     useSharedValue,
     withTiming,
 } from 'react-native-reanimated';
-import { Circle,Svg, } from "react-native-svg";
+import { Circle, Svg, Text as SvgText } from "react-native-svg";
 
 const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 type Props ={
     size:number;
-    progress:number;
-    percentage:number;
 }
 
 export default function Circle_animation({size}:Props){
@@ -30,6 +28,24 @@ export default function Circle_animation({size}:Props){
             strokeDashoffset:
             circumference *(1-progress.value/100),
         }));
+
+const circle = {//円のスタイル
+  text: {//テキスト
+  x: size / 2,                         // 横方向の中央
+  y: size / 2,                         // 縦方向の中央
+  fontSize: 100,                        // 文字サイズ
+  fill: "black",                       // 色
+  textAnchor: "middle" as const,       // 横方向中央揃え
+  alignmentBaseline: "middle" as const // 縦方向中央揃え
+},  text2: {//テキスト二個目
+  x: size / 2,                         // 横方向の中央
+  y: size / 2-60,                         // 縦方向の中央
+  fontSize: 20,                        // 文字サイズ
+  fill: "#000000ff",                       // 色
+  textAnchor: "middle" as const,       // 横方向中央揃え
+  alignmentBaseline: "middle" as const // 縦方向中央揃え
+},
+    };
     return(
         <View style={styles.container}>
               <View style={styles.circle_position}>
@@ -41,10 +57,23 @@ export default function Circle_animation({size}:Props){
                     stroke="#545454ff"
                     strokeWidth={strokeWidth}
                     fill="transparent"
-                    
-                    <AnimatedCircle />
+                    />
+                    <AnimatedCircle
+                       cx = {size/2}
+                    cy={size/2} 
+                    r ={radius}
+                    stroke="#22c7e0ff"
+                    strokeWidth={strokeWidth}
+                    fill="transparent"
+                    strokeDasharray={circumference}
+                    animatedProps={animatedProps}
+                    strokeLinecap="round"
+                    origin={`${size / 2}, ${size / 2}`}
+                    rotation="-90"
+                    />
+                    <SvgText {...circle.text2}>勝率</SvgText>
+                    <SvgText {...circle.text}>75%</SvgText>
                 </Svg>
-             
               </View>
         </View>
     );
@@ -59,5 +88,5 @@ const styles = StyleSheet.create({
     circle_position:{ flex: 1,
          marginTop: 50,
           alignItems: 'center'
-        }
+        },
 })
