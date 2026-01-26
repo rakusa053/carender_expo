@@ -1,8 +1,12 @@
 //データベースに保存
 import * as SQLite from "expo-sqlite";
 import React, { useEffect, useState } from "react";
-import { StyleSheet, View } from 'react-native';
+import { Button, StyleSheet, View } from 'react-native';
 import { TextInput } from "react-native-gesture-handler";
+
+
+export default function Storage_day_value() {
+
 
 const openDB = async () => {
   const db = await SQLite.openDatabaseAsync("mydb.db");
@@ -12,29 +16,13 @@ const openDB = async () => {
 const [input_value,setinput_value] = useState<number | null>(null);
 const [items, setItems] = useState<{ id: number; value: string }[]>([]);
 const [db, setDb] = useState<any>(null);//データベースを他からもアクセスできるようにするため
-//最初に実行される
-  useEffect(() => {
-    const init = async () => {
-      const database = await openDB();
-      setDb(database);//setDbにデータベースに繋がるルートを保存している.
+const [name, setName] = useState<string>("");
 
-      // テーブルを作成（存在しない場合のみ）
-      await database.execAsync(`
-        CREATE TABLE IF NOT EXISTS items (
-          id INTEGER PRIMARY KEY AUTOINCREMENT,
-          value TEXT
-        );
-      `);
 
-      loadItems(database);
-    };
-        init();//関数を作成し実際に実行。
-  }, []);//→依存する値今回はなし
-  
   //データベースにアクセスし、データを取得し、rowに保存し、setItemsでに保存→uiに反映
-    const loadItems = async (database: any) => {//※databaseは引数で使われる名前であり、特に意味はない。その関数で使う時に便利だからそう名付けているだけ
+    const loadItems = async (database: any) => {//※databaseは引数名関係ない
     try {
-      const rows = await database.getAllAsync(//データベースからデータを取得する関数
+      const rows = await database.getAllAsync(//データベースからデータを取得し、rowに保存
         "SELECT id, value FROM items ORDER BY id DESC"
       );
       setItems(rows);
@@ -43,25 +31,45 @@ const [db, setDb] = useState<any>(null);//データベースを他からもア�
     }
   };
 
+//最初に実行される
+  useEffect(() => {
+    const init = async () => {
+      const databasekari = await openDB();
+      setDb(databasekari);//setDbにデータベースに繋がるルートを保存している.
 
+      // テーブルを作成（存在しない場合のみ）
+      await databasekari.execAsync(`
+        CREATE TABLE IF NOT EXISTS items (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          value TEXT
+        );
+      `);
+
+      loadItems(databasekari);
+    };
+        init();//関数を作成し実際に実行。
+  }, []);//→依存する値今回はなし
+  
+
+ //ここで数字を保存すればいい
   const addItem = async () => {
   if (!db) return;//データベースがなかったら中止する
-  await db.runAsync("INSERT INTO items (value) VALUES (?);",[input_value//ここに式などを入れる今回は時刻を入れる関数が入っている。
-  ]);
+  await db.runAsync("INSERT INTO items (value) VALUES (?);",//ここでsetNameをnumberかどうかを調べて表示したい
+    [input_value]);
   loadItems(db);
+  setinput_value(null);
   };
 
-export default function Storage_day_value() {
-    const [name, setName] = useState<string>("");
 
 return(
     <View>
     <TextInput 
     style ={styles.inputtext}
     value = {name}
-    onChangeText={setName}
+    onChangeText={setName}//ここに入力内容が保存される。→ボタンを押したらこの値を参照してSQlに保存する関数を作成し、ボタンを教えてそれを呼べばいい
     placeholder="金額を入力してください"
     ></TextInput>
+    <Button   title="保存" onPress={addItem}/>
     </View>
 )
 }

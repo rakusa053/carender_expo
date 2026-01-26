@@ -1,8 +1,7 @@
+import Storage_day_value from "@/components/ui/storage_day_value";
 import { useLocalSearchParams } from "expo-router";
 import React, { useState } from "react";
 import { StyleSheet, Text, View, } from 'react-native';
-import { TextInput } from "react-native-gesture-handler";
-
 
 
 export default function dayscrren() {
@@ -35,12 +34,13 @@ export default function dayscrren() {
   </View>
 </View>
       <View style={styles.container}>
-<TextInput 
+<Storage_day_value/>
+{/* <TextInput 
 style ={styles.inputtext}
 value = {name}
 onChangeText={setName}
 placeholder="金額を入力してください"
-></TextInput>
+></TextInput> */}
 
       </View>
     </>
