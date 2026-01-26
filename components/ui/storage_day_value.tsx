@@ -1,8 +1,8 @@
 //データベースに保存
 import * as SQLite from "expo-sqlite";
 import React, { useEffect, useState } from "react";
-import { Button, StyleSheet, View } from 'react-native';
-import { TextInput } from "react-native-gesture-handler";
+import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
+
 
 
 export default function Storage_day_value() {
@@ -17,6 +17,7 @@ const [input_value,setinput_value] = useState<number | null>(null);
 const [items, setItems] = useState<{ id: number; value: string }[]>([]);
 const [db, setDb] = useState<any>(null);//データベースを他からもアクセスできるようにするため
 const [name, setName] = useState<string>("");
+const [isnmuber,setisnumber] = useState<boolean>(true);
 
 
   //データベースにアクセスし、データを取得し、rowに保存し、setItemsでに保存→uiに反映
@@ -59,19 +60,40 @@ const [name, setName] = useState<string>("");
   loadItems(db);
   setinput_value(null);
   };
+  //入力された数字をキャストして検証
+  useEffect(()=>{
+  const num = Number(name);
+  if (Number.isNaN(num)){
+    setisnumber(false);
+  }else {
+     setisnumber(true);
+    }
+  } ,[name])
 
 
 return(
+  isnmuber ? (
     <View>
-    <TextInput 
-    style ={styles.inputtext}
-    value = {name}
-    onChangeText={setName}//ここに入力内容が保存される。→ボタンを押したらこの値を参照してSQlに保存する関数を作成し、ボタンを教えてそれを呼べばいい
-    placeholder="金額を入力してください"
-    ></TextInput>
-    <Button   title="保存" onPress={addItem}/>
+      <TextInput 
+      style ={styles.inputtext}
+      value = {name}
+      onChangeText={setName}
+      placeholder="金額を入力してください"/>
+      <Button   title="保存" onPress={addItem}/>
     </View>
+):(
+<View>
+      <TextInput 
+      style ={styles.errorinputtext}
+      value = {name}
+      onChangeText={setName}
+      placeholder="金額を入力してください"/>
+      {/* <Button   title="保存" onPress={addItem}/> */}
+      <Text style = {styles.text} >数字で入力してください</Text>
+</View>
 )
+)
+
 }
 
 
@@ -84,8 +106,17 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 6,
   },
-    text: {
+  errorinputtext:{
     color: '#000000ff',
-    fontSize:10,
+    fontSize:20,
+    borderColor: "#ff0000ff",
+    padding: 10,
+    borderRadius: 6,
+    backgroundColor:"#ff7e7eff"
+  },
+    text: {
+    textAlign: "center",
+    color: '#ff0000ff',
+    fontSize:20,
   },
 });
