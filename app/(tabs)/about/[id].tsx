@@ -5,9 +5,17 @@ import { StyleSheet, Text, View, } from 'react-native';
 
 
 export default function dayscrren() {
-  const { id ,month} = useLocalSearchParams();
+  const prams = useLocalSearchParams();
+
+  const id = typeof prams.id === "string" ? prams.id : undefined;
+  const month = typeof prams.id === "string" ? prams.id : undefined;
+  const year = typeof prams.id ==="string"? prams.id:undefined;
+  if (!id || !month||!year) {// →id がstring[]になるのを防ぐため
+  return <Text>パラメータが不正です</Text>;
+}
   const [name, setName] = useState<string>("");
   return (
+    
     <>
     <View style={styles.days}>
        <Text style={[styles.monthtext,{marginTop:150},]}> {month}月{id}日</Text>
@@ -34,7 +42,7 @@ export default function dayscrren() {
   </View>
 </View>
       <View style={styles.container}>
-<Storage_day_value/>
+<Storage_day_value id ={id} month ={month} year ={year}/>
 {/* <TextInput 
 style ={styles.inputtext}
 value = {name}

@@ -1,12 +1,17 @@
-//データベースに保存
+//データベースに保存→保存するためのテキストも表示
 import * as SQLite from "expo-sqlite";
 import React, { useEffect, useState } from "react";
 import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
 
 
 
-export default function Storage_day_value() {
+type Props ={
+  id :string
+  month:string
+  year:string
+}
 
+export default function Storage_day_value({id,month,year}:Props) {
 
 const openDB = async () => {
   const db = await SQLite.openDatabaseAsync("mydb.db");
@@ -40,10 +45,13 @@ const [isnmuber,setisnumber] = useState<boolean>(true);
 
       // テーブルを作成（存在しない場合のみ）
       await databasekari.execAsync(`
-        CREATE TABLE IF NOT EXISTS items (
-          id INTEGER PRIMARY KEY AUTOINCREMENT,
-          value TEXT
-        );
+      CREATE TABLE IF NOT EXISTS items (
+        id INTEGER ,
+        year INTEGER NOT NULL,
+        month INTEGER NOT NULL,
+        value INTEGER
+        UNIQUE (id, year, month)
+      );
       `);
 
       loadItems(databasekari);
@@ -54,12 +62,16 @@ const [isnmuber,setisnumber] = useState<boolean>(true);
 
  //ここで数字を保存すればいい
   const addItem = async () => {
-  if (!db) return;//データベースがなかったら中止する
-  await db.runAsync("INSERT INTO items (value) VALUES (?);",//ここでsetNameをnumberかどうかを調べて表示したい
-    [input_value]);
+  if (!db) return;//データベースがなかったら中止する→これでidと値を保存することができるようになった
+  await db.runAsync(`INSERT INTO items (id,year,month, value)
+   VALUES (?, ?,?,?)
+  ON CONFLICT(id, year, month)
+  DO UPDATE SET value = excluded.value;`,
+  [id, year,month,input_value]);
   loadItems(db);
   setinput_value(null);
   };
+  
   //入力された数字をキャストして検証
   useEffect(()=>{
   const num = Number(name);

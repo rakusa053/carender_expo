@@ -6,12 +6,13 @@ import Animated, { useAnimatedStyle, useSharedValue, withTiming } from "react-na
 type  Props = PropsWithChildren<{
     route:number
     month:number;
+    year:number;
     triger? :boolean;
     restriger?:()=>void;
     }>;
 
 
-export default function Screen_animation({children,route,month,triger,restriger}:Props){
+export default function Screen_animation({children,route,month,year,triger,restriger}:Props){
     const router = useRouter();
     const [page,setPage]  =useState(0);
     const x = useSharedValue(0);
@@ -27,7 +28,7 @@ export default function Screen_animation({children,route,month,triger,restriger}
       triger = false;
       router.push({
         pathname:"/about/[id]",
-        params:{id:route,month:month},
+        params:{id:route,month:month,year:year},//これでもパラメーターを渡すことができる
 
       }
 
