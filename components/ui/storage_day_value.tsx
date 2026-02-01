@@ -1,17 +1,18 @@
 //データベースに保存→保存するためのテキストも表示
+import { month_total } from "@/app/(tabs)/month_total";
 import * as SQLite from "expo-sqlite";
 import React, { useEffect, useState } from "react";
 import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
-
 
 
 type Props ={
   id :string
   month:string
   year:string
+  totalchange:(total:number)=>void;
 }
 
-export default function Storage_day_value({id,month,year}:Props) {
+export default function Storage_day_value({id,month,year,totalchange}:Props) {
 
 const openDB = async () => {
   const db = await SQLite.openDatabaseAsync("mydb.db");
@@ -49,11 +50,10 @@ const [isnmuber,setisnumber] = useState<boolean>(true);
         id INTEGER ,
         year INTEGER NOT NULL,
         month INTEGER NOT NULL,
-        value INTEGER
+        value INTEGER,
         UNIQUE (id, year, month)
       );
       `);
-
       loadItems(databasekari);
     };
         init();//関数を作成し実際に実行。
@@ -68,8 +68,21 @@ const [isnmuber,setisnumber] = useState<boolean>(true);
   ON CONFLICT(id, year, month)
   DO UPDATE SET value = excluded.value;`,
   [id, year,month,input_value]);
+  //合計金額を算出
+
+
+
+
+
+  const total = await month_total({
+  month,
+  year,
+});
+
+totalchange(total);
   loadItems(db);
   setinput_value(null);
+
   };
   
   //入力された数字をキャストして検証

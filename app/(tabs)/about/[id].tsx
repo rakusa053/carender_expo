@@ -1,7 +1,7 @@
 import Storage_day_value from "@/components/ui/storage_day_value";
 import { useLocalSearchParams } from "expo-router";
 import React, { useState } from "react";
-import { StyleSheet, Text, View, } from 'react-native';
+import { Button, StyleSheet, Text, View } from 'react-native';
 
 
 export default function dayscrren() {
@@ -14,6 +14,10 @@ export default function dayscrren() {
   return <Text>パラメータが不正です</Text>;
 }
   const [name, setName] = useState<string>("");
+  const [total,settotal] = useState(0);
+    const onPressButton = () => {
+    console.log(total);
+  };
   return (
     
     <>
@@ -41,8 +45,9 @@ export default function dayscrren() {
    <Text style = {styles.percenttext}>前日比</Text>
   </View>
 </View>
+   <Button title="押してね" onPress={onPressButton} />
       <View style={styles.container}>
-<Storage_day_value id ={id} month ={month} year ={year}/>
+<Storage_day_value id ={id} month ={month} year ={year} totalchange={settotal}/>
 {/* <TextInput 
 style ={styles.inputtext}
 value = {name}

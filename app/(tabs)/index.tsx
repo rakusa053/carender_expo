@@ -15,6 +15,7 @@ const progress = useSharedValue(0);
 const [screen_animatiom_parameters ,set_screen_animation]= useState(false);
 const [routeDay,setRouteDay] = useState(0);
 const [routeMonth,setRouteMonth] = useState(0);
+const [routeYear,setRouteYear] = useState(0);
 
 const setcalender = (day:DateData)=>{
             set_screen_animation(true);
@@ -22,12 +23,13 @@ const setcalender = (day:DateData)=>{
           //set_screen_animation(false);//これが悪さしている。なぜ？pageが変わる前にfalseになっている？
           //router.push(`/about/${day.day}`);//ここでページ遷移
           setRouteMonth(day.month);
+          setRouteYear(day.year);
           console.log("選択された日：", day);
           setSelectedDate(day.dateString);
 }
   return (
     <>
-<Screen_animation route = {routeDay} triger = {screen_animatiom_parameters} month={routeMonth} restriger= {()=>set_screen_animation(false)}>
+<Screen_animation route = {routeDay} triger = {screen_animatiom_parameters} month={routeMonth} year={routeYear} restriger= {()=>set_screen_animation(false)}>
 <View style={styles.container}>{/*全体のレイアウト 今の場合， */}
     <Circle_animation size={250}/>
           <View style={{flex:0.3,backgroundColor:'#ffffffff'}}>
