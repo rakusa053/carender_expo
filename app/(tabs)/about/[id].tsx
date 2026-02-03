@@ -1,15 +1,15 @@
+import Display_month from "@/components/ui/display_mmonth";
 import Storage_day_value from "@/components/ui/storage_day_value";
 import { useLocalSearchParams } from "expo-router";
 import React, { useState } from "react";
 import { Button, StyleSheet, Text, View } from 'react-native';
 
-
 export default function dayscrren() {
   const prams = useLocalSearchParams();
 
   const id = typeof prams.id === "string" ? prams.id : undefined;
-  const month = typeof prams.id === "string" ? prams.id : undefined;
-  const year = typeof prams.id ==="string"? prams.id:undefined;
+  const month = typeof prams.month === "string" ? prams.month : undefined;
+  const year = typeof prams.year ==="string"? prams.year:undefined;
   if (!id || !month||!year) {// →id がstring[]になるのを防ぐため
   return <Text>パラメータが不正です</Text>;
 }
@@ -37,9 +37,10 @@ export default function dayscrren() {
 
 
 <View style={styles.percent}>
-  <View style = {styles.percentbox}>
+  <Display_month total={total}/>
+  {/* <View style = {styles.percentbox}>
    <Text style = {styles.percenttext}>今月の収支</Text>
-  </View>
+  </View> */}
   
   <View style = {styles.percentbox}>
    <Text style = {styles.percenttext}>前日比</Text>

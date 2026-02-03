@@ -40,6 +40,7 @@ const [isnmuber,setisnumber] = useState<boolean>(true);
 
 //最初に実行される
   useEffect(() => {
+
     const init = async () => {
       const databasekari = await openDB();
       setDb(databasekari);//setDbにデータベースに繋がるルートを保存している.
@@ -67,10 +68,14 @@ const [isnmuber,setisnumber] = useState<boolean>(true);
    VALUES (?, ?,?,?)
   ON CONFLICT(id, year, month)
   DO UPDATE SET value = excluded.value;`,
-  [id, year,month,input_value]);
+  [id, year,month,name]);
   //合計金額を算出
-
-
+  console.log("入力された金額は",name);
+//金額チェック
+const allItems = await db.getAllAsync(
+  `SELECT * FROM items;`
+);
+console.log("itemsテーブル全体:", allItems);
 
 
 

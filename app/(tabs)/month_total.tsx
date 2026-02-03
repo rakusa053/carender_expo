@@ -24,16 +24,15 @@ export const month_total = async (
   
   const row = await database.getFirstAsync<{ total: number }>(
     `
-    SELECT COALESCE(SUM(id), 0) AS total
+    SELECT COALESCE(SUM(value), 0) AS total
     FROM items
     WHERE year = ? AND month = ?;
     `,
     [year, month]
-     
   );
   
   
-  console.log(row);
+  console.log("合計金額は",row);
 
   return row?.total ?? 0;
 };
