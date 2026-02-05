@@ -1,4 +1,5 @@
 import Display_month from "@/components/ui/display_mmonth";
+import PlusMinusButton from "@/components/ui/plusminusbutton";
 import Storage_day_value from "@/components/ui/storage_day_value";
 import { useLocalSearchParams } from "expo-router";
 import React, { useState } from "react";
@@ -47,8 +48,11 @@ export default function dayscrren() {
   </View>
 </View>
    <Button title="押してね" onPress={onPressButton} />
+ 
       <View style={styles.container}>
+
 <Storage_day_value id ={id} month ={month} year ={year} totalchange={settotal}/>
+  <PlusMinusButton/>
 {/* <TextInput 
 style ={styles.inputtext}
 value = {name}
@@ -73,7 +77,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#315071ff',
     flexDirection: 'row',
     justifyContent: 'center',// ← 横方向の真ん中
-    
   },
     percentbox:{
     flex:0.5,

@@ -2,7 +2,7 @@
 import { month_total } from "@/app/(tabs)/month_total";
 import * as SQLite from "expo-sqlite";
 import React, { useEffect, useState } from "react";
-import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 
 
 type Props ={
@@ -104,12 +104,21 @@ totalchange(total);
 return(
   isnmuber ? (
     <View>
-      <TextInput 
-      style ={styles.inputtext}
-      value = {name}
-      onChangeText={setName}
-      placeholder="金額を入力してください"/>
-      <Button   title="保存" onPress={addItem}/>
+      <View>
+        <TextInput 
+        style ={styles.inputtext}
+        value = {name}
+        onChangeText={setName}
+        placeholder="金額を入力してください"/>
+      </View>
+
+      <View>
+        {/* <Button   title="保存" onPress={addItem}/> */}
+        <Pressable style={styles.button}>
+        <Text style={{fontSize:20}}>保存</Text>
+        </Pressable>
+      </View>
+
     </View>
 ):(
 <View>
@@ -147,6 +156,12 @@ const styles = StyleSheet.create({
     text: {
     textAlign: "center",
     color: '#ff0000ff',
-    fontSize:20,
+    fontSize:40,
   },
+  button:{
+    borderRadius: 4,
+    padding: 10,
+    alignItems: "center",
+    backgroundColor: '#ffffffff',
+  }
 });
