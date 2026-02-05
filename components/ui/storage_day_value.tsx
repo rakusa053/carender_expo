@@ -127,7 +127,7 @@ return(
       value = {name}
       onChangeText={setName}
       placeholder="金額を入力してください"/>
-      {/* <Button   title="保存" onPress={addItem}/> */}
+      {/* <Button   title="保存" onPress={addItem}/> a*/}
       <Text style = {styles.text} >数字で入力してください</Text>
 </View>
 )
