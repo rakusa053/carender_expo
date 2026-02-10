@@ -1,5 +1,6 @@
 import Display_month from "@/components/ui/display_mmonth";
 import PlusMinusButton from "@/components/ui/plusminusbutton";
+import Storage_button from "@/components/ui/storage_button";
 import Storage_day_value from "@/components/ui/storage_day_value";
 import { useLocalSearchParams } from "expo-router";
 import React, { useState } from "react";
@@ -16,6 +17,7 @@ export default function dayscrren() {
 }
   const [name, setName] = useState<string>("");
   const [total,settotal] = useState(0);
+  const [db, setdb] = useState<any>(null);
     const onPressButton = () => {
     console.log(total);
   };
@@ -51,8 +53,9 @@ export default function dayscrren() {
  
       <View style={styles.container}>
 
-<Storage_day_value id ={id} month ={month} year ={year} totalchange={settotal}/>
+<Storage_day_value id ={id} month ={month} year ={year} totalchange={settotal} dbchange={setdb}/>
   <PlusMinusButton/>
+  <Storage_button  id ={id} month ={month} year ={year} totalchange={settotal} db={db}/>
 {/* <TextInput 
 style ={styles.inputtext}
 value = {name}

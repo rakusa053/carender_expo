@@ -2,7 +2,7 @@
 import { month_total } from "@/app/(tabs)/month_total";
 import * as SQLite from "expo-sqlite";
 import React, { useEffect, useState } from "react";
-import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
+import { StyleSheet, Text, TextInput, View } from 'react-native';
 
 
 type Props ={
@@ -10,9 +10,10 @@ type Props ={
   month:string
   year:string
   totalchange:(total:number)=>void;
+  dbchange:(db:any)=>void;
 }
 
-export default function Storage_day_value({id,month,year,totalchange}:Props) {
+export default function Storage_day_value({id,month,year,totalchange,  dbchange}:Props) {
 
 const openDB = async () => {
   const db = await SQLite.openDatabaseAsync("mydb.db");
@@ -44,7 +45,7 @@ const [isnmuber,setisnumber] = useState<boolean>(true);
     const init = async () => {
       const databasekari = await openDB();
       setDb(databasekari);//setDbにデータベースに繋がるルートを保存している.
-
+      console.log("テーブルを作成")
       // テーブルを作成（存在しない場合のみ）
       await databasekari.execAsync(`
       CREATE TABLE IF NOT EXISTS items (
@@ -58,6 +59,7 @@ const [isnmuber,setisnumber] = useState<boolean>(true);
       loadItems(databasekari);
     };
         init();//関数を作成し実際に実行。
+  dbchange(db);
   }, []);//→依存する値今回はなし
   
 
@@ -65,7 +67,7 @@ const [isnmuber,setisnumber] = useState<boolean>(true);
   const addItem = async () => {
   if (!db) return;//データベースがなかったら中止する→これでidと値を保存することができるようになった
   await db.runAsync(`INSERT INTO items (id,year,month, value)
-   VALUES (?, ?,?,?)
+  VALUES (?, ?,?,?)
   ON CONFLICT(id, year, month)
   DO UPDATE SET value = excluded.value;`,
   [id, year,month,name]);
@@ -114,9 +116,9 @@ return(
 
       <View>
         {/* <Button   title="保存" onPress={addItem}/> */}
-        <Pressable style={styles.button}>
+        {/* <Pressable style={styles.button} onPress={addItem}>
         <Text style={{fontSize:20}}>保存</Text>
-        </Pressable>
+        </Pressable> */}
       </View>
 
     </View>
