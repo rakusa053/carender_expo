@@ -105,7 +105,7 @@ totalchange(total);
 
 return(
   isnmuber ? (
-    <View>
+    <View  >
       <View>
         <TextInput 
         style ={styles.inputtext}
@@ -140,8 +140,10 @@ return(
 
 const styles = StyleSheet.create({
     inputtext: {
+
     color: '#000000ff',
     fontSize:20,
+      width:"100%",
     borderWidth: 1,
     borderColor: "#999",
     padding: 10,

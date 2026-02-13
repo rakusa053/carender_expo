@@ -27,7 +27,7 @@ export default function Storage_day_value2({
   }, []);
 
   return isNumber ? (
-    <View>
+  <View style={{ flex: 1 }}>
       <TextInput
         style={styles.inputtext}
         value={name}
@@ -50,6 +50,7 @@ export default function Storage_day_value2({
 
 const styles = StyleSheet.create({
   inputtext: {
+
     fontSize: 20,
     borderWidth: 1,
     borderColor: "#999",
@@ -58,6 +59,7 @@ const styles = StyleSheet.create({
   },
 
   errorinputtext: {
+
     fontSize: 20,
     borderColor: "#ff0000",
     padding: 10,

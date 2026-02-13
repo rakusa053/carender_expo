@@ -50,19 +50,25 @@ export default function dayscrren() {
 </View>
    <Button title="押してね" onPress={onPressButton} />
  
-      <View style={styles.container}>
 
-<Storage_day_value2 id ={id} month ={month} year ={year} />
+ <View style={{flex:0.3, backgroundColor:"#555b67"}}>
+  <View style={styles.container}>
+    <View style={styles.row}>
   <PlusMinusButton/>
-  <Storage_button2  id ={id} month ={month} year ={year} />
+  <Storage_day_value2 id ={id} month ={month} year ={year} />
+  
+    </View>
+
+
 {/* <TextInput 
 style ={styles.inputtext}
 value = {name}
 onChangeText={setName}
 placeholder="金額を入力してください"
 ></TextInput> */}
-
-      </View>
+<Storage_button2  id ={id} month ={month} year ={year} />
+</View>
+</View>
     </>
   );
 }
@@ -85,17 +91,22 @@ const styles = StyleSheet.create({
     backgroundColor: '#315071ff',
     flexDirection: 'row',
     justifyContent: 'center',// ← 横方向の真ん中
-    
+      alignItems:'center',
   },
     percenttext:{
     color: '#000000ff',
     fontSize:30,
   },
+  row:{
+  flexDirection:"row",
+    width:"100%",
+  },
   container: {
-    flex: 0.3,
+      width:"90%",      // ← 追加
+  maxWidth:700,  
     backgroundColor: '#555b67ff',
     justifyContent: 'center',
-    alignItems: 'center',
+      alignSelf:"center",
   },
   monthtext: {
     color: '#000000ff',

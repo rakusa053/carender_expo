@@ -26,6 +26,7 @@ const addItem = Savevalue((s)=>s.addItem)
 
 const styles=StyleSheet.create({
   button:{
+    width: "100%",
     borderRadius: 4,
     padding: 10,
     alignItems: "center",

@@ -13,7 +13,7 @@ const press_minus_button = ()=>{
     setminussbutton(true);
 }
     return(
-        <View>
+        <View style={styles.container}>
         <Pressable style = {styles.button} onPress={press_plus_button}>
             <Text style = {styles.text}>+</Text>
         </Pressable>
@@ -25,28 +25,31 @@ const press_minus_button = ()=>{
 }
 
 const styles = StyleSheet.create({
+    container:{
+        flexDirection:"row"
+    },
     button:{
-        width:25,
-        height:25,
+        width:50,
+        height:50,
         borderWidth: 2,      // ← 線の太さ
         borderColor: "black",//
         borderRadius: 3,
-    },
-    text:{
-        color:"white",
-        fontSize:20,
         justifyContent:"center",
         alignItems:'center',
     },
+    text:{
+        color:"white",
+        fontSize:35,
+    },
     plusbutton:{
-        width:20,
-        height:20.,
+        width:50,
+        height:50,
         borderRadius:24,
         backgroundColor:"#ff0000ff"
     },
     minusbutton:{
-        width:20,
-        height:20.,
+        width:50,
+        height:50,
         borderRadius:24,
         backgroundColor:"#0d00ffff"
     }
