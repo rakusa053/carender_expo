@@ -1,3 +1,4 @@
+//initDBと定義しどのスクリプトからでもデータを更新できるようにしている
 import * as SQLite from "expo-sqlite";
 import { create } from "zustand";
 

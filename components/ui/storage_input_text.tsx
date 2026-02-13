@@ -1,8 +1,8 @@
+//データベースに保存→保存するためのテキストも表示
+import { useDBStore } from "@/stores/createmoneytabale";
+import { InputvalueStore } from "@/stores/inputvalue";
 import React, { useEffect } from "react";
-import { StyleSheet, Text, TextInput, View } from "react-native";
-
-import { useDBStore } from "@/stores/dbStore";
-import { useInputStore } from "@/stores/inputStore";
+import { StyleSheet, Text, TextInput, View } from 'react-native';
 
 type Props = {
   id: string;
@@ -10,18 +10,18 @@ type Props = {
   year: string;
 };
 
-export default function Storage_day_value({
+export default function Storage_day_value2({
   id,
   month,
   year,
 }: Props) {
-
+  //UI更新のため念のため監視
   const initDB = useDBStore((s) => s.initDB);
+  const name = InputvalueStore((s) => s.name);
+  const isNumber = InputvalueStore((s) => s.isNumber);//これを行うことで別のスクリプトでtueにするだけでokになっている
+  const setName = InputvalueStore((s) => s.setName);
 
-  const name = useInputStore((s) => s.name);
-  const isNumber = useInputStore((s) => s.isNumber);
-  const setName = useInputStore((s) => s.setName);
-
+  //開始した時にテーブルを作成
   useEffect(() => {
     initDB();
   }, []);

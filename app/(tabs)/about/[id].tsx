@@ -1,11 +1,10 @@
 import Display_month from "@/components/ui/display_mmonth";
 import PlusMinusButton from "@/components/ui/plusminusbutton";
-import Storage_button from "@/components/ui/storage_button";
-import Storage_day_value from "@/components/ui/storage_day_value";
+import Storage_button2 from "@/components/ui/storage_button2";
+import Storage_day_value2 from "@/components/ui/storage_input_text";
 import { useLocalSearchParams } from "expo-router";
 import React, { useState } from "react";
 import { Button, StyleSheet, Text, View } from 'react-native';
-
 export default function dayscrren() {
   const prams = useLocalSearchParams();
 
@@ -53,9 +52,9 @@ export default function dayscrren() {
  
       <View style={styles.container}>
 
-<Storage_day_value id ={id} month ={month} year ={year} totalchange={settotal} dbchange={setdb}/>
+<Storage_day_value2 id ={id} month ={month} year ={year} />
   <PlusMinusButton/>
-  <Storage_button  id ={id} month ={month} year ={year} totalchange={settotal} db={db}/>
+  <Storage_button2  id ={id} month ={month} year ={year} />
 {/* <TextInput 
 style ={styles.inputtext}
 value = {name}
