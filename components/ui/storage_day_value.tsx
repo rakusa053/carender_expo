@@ -1,4 +1,4 @@
-//データベースに保存→保存するためのテキストも表示
+//データベースに保存→保存するためのテキストも表示(現在は廃止)
 import { month_total } from "@/app/(tabs)/month_total";
 import * as SQLite from "expo-sqlite";
 import React, { useEffect, useState } from "react";

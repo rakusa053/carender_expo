@@ -1,50 +1,145 @@
-# Welcome to your Expo app 👋
+#　関数定義
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+## ui
+## Make_calender.tsx
+関数名: Make_calender
 
-## Get started
+引数:
 
-1. Install dependencies
+DayPress: (day: DateData) => void （カレンダーの日付がタップされた際のイベントハンドラ）
 
-   ```bash
-   npm install
-   ```
+使い方: カレンダーを表示し、ユーザーが特定の日付を選択した際の処理を親コンポーネントから制御します。
 
-2. Start the app
+## Circle_animation.tsx
+関数名: Circle_animation
 
-   ```bash
-   npx expo start
-   ```
+引数:
 
-In the output, you'll find options to open the app in a
+size: number （円の大きさ）
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+使い方: 勝率（現在は65%で固定）をアニメーションを伴う円グラフとして描画します。
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+## Circle.tsx
+関数名: Circle_display
 
-## Get a fresh project
+引数:
 
-When you're ready, run:
+size: number （円の大きさ）
 
-```bash
-npm run reset-project
-```
+使い方: 勝率を表示するための静的な円グラフを表示します。
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## Display_month.tsx
+関数名: Display_month
 
-## Learn more
+引数:
 
-To learn more about developing your project with Expo, look at the following resources:
+total: number （表示する収支の合計値）
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+使い方: 画面上部に「今月の収支」というテキストと、渡された合計金額を表示します。
 
-## Join the community
+## storage_input_text.tsx
+関数名: Storage_day_value2
 
-Join our community of developers creating universal apps.
+引数:
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+id: string
+
+month: string
+
+year: string
+
+使い方: 金額を入力するためのテキストボックスを表示します。
+
+特徴: InputvalueStore を監視し、数字以外の入力時にはエラー表示（赤色）に切り替わります。
+
+## storage_button2.tsx
+関数名: Storage_button2
+
+引数:
+
+id: string
+
+month: string
+
+year: string
+
+使い方: データを保存するためのボタンです。
+
+特徴: 入力値が数値である場合（isNumber が true）のみ表示され、タップするとデータを保存（addItem）します。
+
+## plusminusbutton.tsx
+関数名: PlusMinusButton
+
+引数: なし
+
+使い方: 「+」と「-」のボタンを表示し、収支のプラス/マイナスを切り替えるためのUIです。
+
+## storage_button.tsx（廃止）
+関数名: Storage_button
+
+引数: id, month, year, totalchange, db
+
+使い方: 旧式の保存ボタンです。
+
+## storage_day_value.tsx（廃止）
+関数名: Storage_day_value
+
+引数: id, month, year, totalchange, dbchange
+
+使い方: 旧式の入力・保存・DB初期化用コンポーネントです。
+
+## testsqlte.tsx
+関数名: SQLiteExample
+
+引数: なし
+
+使い方: SQLite の基本的な動作テスト用の画面を表示します。
+
+
+
+##　createmoneytabale.tsx
+ストア名: useDBStore
+
+管理している状態と関数:
+
+db: SQLiteデータベースのインスタンス。
+
+initDB(): データベースを開き、items テーブルを作成する非同期関数。
+
+コンポーネントでの書き方:
+
+TypeScript
+const { db, initDB } = useDBStore();
+useEffect(() => { initDB(); }, []);
+##　inputvalue.tsx
+ストア名: InputvalueStore
+
+管理している状態と関数:
+
+name: 入力フォームの現在の文字列。
+
+isNumber: 入力値が数値かどうかの判定結果。
+
+setName(text): 文字列を更新し、同時に数値判定を行う関数。
+
+コンポーネントでの書き方:
+
+TypeScript
+const { name, setName, isNumber } = InputvalueStore();
+<TextInput value={name} onChangeText={setName} />
+
+## savevalue.tsx
+
+ストア名: Savevalue
+
+管理している状態と関数:
+
+total: その月の合計金額。
+
+addItem(id, month, year): 入力値をDBに保存（Upsert）し、合計を再計算する関数。
+
+コンポーネントでの書き方:
+
+TypeScript
+const { total, addItem } = Savevalue();
+<Button onPress={() => addItem("1", "2", "2026")} title="保存" />

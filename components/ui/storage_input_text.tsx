@@ -1,4 +1,4 @@
-//データベースに保存→保存するためのテキストも表示
+//インプットテキストの表示
 import { useDBStore } from "@/stores/createmoneytabale";
 import { InputvalueStore } from "@/stores/inputvalue";
 import React, { useEffect } from "react";
@@ -50,8 +50,7 @@ export default function Storage_day_value2({
 
 const styles = StyleSheet.create({
   inputtext: {
-
-    fontSize: 20,
+    flex: 1,      fontSize: 20,
     borderWidth: 1,
     borderColor: "#999",
     padding: 10,

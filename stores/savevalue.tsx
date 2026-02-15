@@ -25,7 +25,7 @@ export const Savevalue = create<MoneyState>((set)=>({
         const db = useDBStore.getState().db;//現在のdbの様子を取得
         const name = InputvalueStore.getState().name;
 
-        if(!db)return;
+        if(!db)return;//新しいvalueがきたら更新するもの
             await db.runAsync(
       `INSERT INTO items (id,year,month,value)
        VALUES (?, ?, ?, ?)

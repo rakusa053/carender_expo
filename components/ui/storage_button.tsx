@@ -1,3 +1,5 @@
+//現在は廃止
+
 import { month_total } from "@/app/(tabs)/month_total";
 import { useState } from "react";
 import { Pressable, StyleSheet, Text, View } from 'react-native';
