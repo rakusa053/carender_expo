@@ -25,3 +25,4 @@ export const useDBStore = create<DBstate>((set)=>({
     set({db:database});//dbの内容をデータベースに更新
     },
 }));
+//文字だけ追加
