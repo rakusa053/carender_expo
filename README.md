@@ -99,6 +99,7 @@ year: string
 
 ##　createmoneytabale.tsx
 ストア名: useDBStore
+役割：テーブル作成
 
 管理している状態と関数:
 
@@ -113,6 +114,8 @@ const { db, initDB } = useDBStore();
 useEffect(() => { initDB(); }, []);
 ##　inputvalue.tsx
 ストア名: InputvalueStore
+役割：入力されたテキストが文字化それとも数字かを判断する
+それが数字か文字はisNumberで判断する。
 
 管理している状態と関数:
 
@@ -129,8 +132,8 @@ const { name, setName, isNumber } = InputvalueStore();
 <TextInput value={name} onChangeText={setName} />
 
 ## savevalue.tsx
-
 ストア名: Savevalue
+役割：料金を保存もしくは更新する
 
 管理している状態と関数:
 

@@ -1,3 +1,4 @@
+//使用していいない
 import * as SQLite from "expo-sqlite";
 import React, { useEffect, useState } from "react";
 import { Button, FlatList, StyleSheet, Text, View } from "react-native";

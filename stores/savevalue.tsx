@@ -3,10 +3,10 @@
 //addItemを関数名として保存ボタンを押したら引数を渡せばいい
 
 import { month_total } from "@/app/(tabs)/month_total";
+import { saveMoney } from "@/function/savemoney";
 import { create } from "zustand";
 import { useDBStore } from "./createmoneytabale";
 import { InputvalueStore } from "./inputvalue";
-
 type MoneyState = {
     total:number;
 
@@ -24,15 +24,10 @@ export const Savevalue = create<MoneyState>((set)=>({
     addItem:async(id,month,year)=>{
         const db = useDBStore.getState().db;//現在のdbの様子を取得
         const name = InputvalueStore.getState().name;
-
+        const value = Number(name);
         if(!db)return;//新しいvalueがきたら更新するもの
-            await db.runAsync(
-      `INSERT INTO items (id,year,month,value)
-       VALUES (?, ?, ?, ?)
-       ON CONFLICT(id, year, month)
-       DO UPDATE SET value = excluded.value;`,
-      [id, year, month, name]
-    );
+        await saveMoney(db,id,year,month,value);
+    
 
     const total = await month_total({month,year});//ここで合計金額を算出
 
