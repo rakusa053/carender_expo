@@ -1,4 +1,4 @@
-//インプットテキストの表示
+// components/ui/storage_input_text.tsx　
 import { useDBStore } from "@/stores/createmoneytabale";
 import { InputvalueStore } from "@/stores/inputvalue";
 import React, { useEffect } from "react";
@@ -15,19 +15,24 @@ export default function Storage_day_value2({
   month,
   year,
 }: Props) {
-  //UI更新のため念のため監視
+  // UI更新のため念のため監視
+  console.log("hook 1: initDB");
   const initDB = useDBStore((s) => s.initDB);
+  console.log("hook 2: initDB");
   const name = InputvalueStore((s) => s.name);
-  const isNumber = InputvalueStore((s) => s.isNumber);//これを行うことで別のスクリプトでtueにするだけでokになっている
+  console.log("hook 3: initDB");
+  const isNumber = InputvalueStore((s) => s.isNumber); // true/false 切り替え
+  console.log("hook 4: initDB");
   const setName = InputvalueStore((s) => s.setName);
 
-  //開始した時にテーブルを作成
+  // useEffect を固定して最初のレンダーで必ず initDB を呼ぶ
   useEffect(() => {
+    console.log("hook 5: initDB");
     initDB();
-  }, []);
+  }, [initDB]); // initDB を依存に入れると TypeScript 警告も出ない
 
   return isNumber ? (
-  <View style={{ flex: 1 }}>
+    <View style={{ flex: 1 }}>
       <TextInput
         style={styles.inputtext}
         value={name}
@@ -50,7 +55,8 @@ export default function Storage_day_value2({
 
 const styles = StyleSheet.create({
   inputtext: {
-    flex: 1,      fontSize: 20,
+    flex: 1,
+    fontSize: 20,
     borderWidth: 1,
     borderColor: "#999",
     padding: 10,
@@ -58,7 +64,6 @@ const styles = StyleSheet.create({
   },
 
   errorinputtext: {
-
     fontSize: 20,
     borderColor: "#ff0000",
     padding: 10,

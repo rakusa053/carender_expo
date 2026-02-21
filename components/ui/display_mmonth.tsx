@@ -1,4 +1,5 @@
 // uiを表示画面から持ってきて、それをこのスクリプトで表示する。
+//　今月の収支という名前の表示と円という名前の表示
 import React from "react";
 import { StyleSheet, Text, View } from 'react-native';
 

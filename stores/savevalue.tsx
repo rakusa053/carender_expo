@@ -22,6 +22,7 @@ export const Savevalue = create<MoneyState>((set)=>({
     total:0,
 
     addItem:async(id,month,year)=>{
+        console.log("ここまで到達はしている")
         const db = useDBStore.getState().db;//現在のdbの様子を取得
         const name = InputvalueStore.getState().name;
         const value = Number(name);
