@@ -2,7 +2,7 @@
 //引数がaddItemでこれは外部から渡される
 //addItemを関数名として保存ボタンを押したら引数を渡せばいい
 
-import { month_total } from "@/app/(tabs)/month_total";
+import { month_total } from "@/utils/month_total";
 import { saveMoney } from "@/utils/save-money";
 import { create } from "zustand";
 import { createmoneytable } from "./create-money-table";
@@ -15,11 +15,17 @@ type MoneyState = {
         month:string,
         year:string,
          ) => Promise<void>;
+    fetchTotal:(month:string, year:string) => Promise<void>;
 };
 
 export const Savevalue = create<MoneyState>((set)=>({
 
     total:0,
+
+    fetchTotal: async (month, year) => {
+        const total = await month_total({ month, year });
+        set({ total });
+    },
 
     addItem:async(id,month,year)=>{
         console.log("ここまで到達はしている")

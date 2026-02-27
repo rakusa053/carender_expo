@@ -2,6 +2,9 @@ import Display_month from "@/components/ui/display_mmonth";
 import PlusMinusButton from "@/components/ui/plusminusbutton";
 import Storage_button2 from "@/components/ui/storage_button2";
 import Storage_day_value2 from "@/components/ui/storage_input_text";
+import { createmoneytable } from "@/stores/create-money-table";
+import { InputvalueStore } from "@/stores/input-value";
+import { Savevalue } from "@/stores/save-value";
 import { useLocalSearchParams } from "expo-router";
 import React, { useState } from "react";
 import { Button, StyleSheet, Text, View } from 'react-native';
@@ -11,12 +14,23 @@ export default function dayscrren() {
   const id = typeof prams.id === "string" ? prams.id : undefined;
   const month = typeof prams.month === "string" ? prams.month : undefined;
   const year = typeof prams.year ==="string"? prams.year:undefined;
+  const [name_state, setName_state] = useState<string>("");
+  const [db_state, setdb_state] = useState<any>(null);
+
+  const initDB = createmoneytable((s) => s.initDB);
+  const { name, isNumber, setName } = InputvalueStore();
+  const { total, fetchTotal } = Savevalue();
+
+  React.useEffect(() => {
+    initDB();
+    if (month && year) {
+      fetchTotal(month, year);
+    }
+  }, [initDB, fetchTotal, month, year]);
+
   if (!id || !month||!year) {// →id がstring[]になるのを防ぐため
   return <Text>パラメータが不正です</Text>;
 }
-  const [name, setName] = useState<string>("");
-  const [total,settotal] = useState(0);
-  const [db, setdb] = useState<any>(null);
     const onPressButton = () => {
     console.log(total);
   };
@@ -55,18 +69,18 @@ export default function dayscrren() {
   <View style={styles.container}>
     <View style={styles.row}>
   <PlusMinusButton/>
-  <Storage_day_value2 />
+  <Storage_day_value2 name={name} isNumber={isNumber} onChangeText={setName} />
   
     </View>
 
 
 {/* <TextInput 
 style ={styles.inputtext}
-value = {name}
-onChangeText={setName}
+value = {name_state}
+onChangeText={setName_state}
 placeholder="金額を入力してください"
 ></TextInput> */}
-<Storage_button2  id ={id} month ={month} year ={year} />
+<Storage_button2  id ={id} month ={month} year ={year} isNumber={isNumber} />
 </View>
 </View>
     </>
