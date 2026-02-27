@@ -3,10 +3,10 @@
 //addItemを関数名として保存ボタンを押したら引数を渡せばいい
 
 import { month_total } from "@/app/(tabs)/month_total";
-import { saveMoney } from "@/function/savemoney";
+import { saveMoney } from "@/utils/save-money";
 import { create } from "zustand";
-import { useDBStore } from "./createmoneytabale";
-import { InputvalueStore } from "./inputvalue";
+import { createmoneytable } from "./create-money-table";
+import { InputvalueStore } from "./input-value";
 type MoneyState = {
     total:number;
 
@@ -23,7 +23,7 @@ export const Savevalue = create<MoneyState>((set)=>({
 
     addItem:async(id,month,year)=>{
         console.log("ここまで到達はしている")
-        const db = useDBStore.getState().db;//現在のdbの様子を取得
+        const db = createmoneytable.getState().db;//現在のdbの様子を取得
         const name = InputvalueStore.getState().name;
         const value = Number(name);
         if(!db)return;//新しいvalueがきたら更新するもの

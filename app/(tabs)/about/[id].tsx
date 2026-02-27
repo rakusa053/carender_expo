@@ -55,7 +55,7 @@ export default function dayscrren() {
   <View style={styles.container}>
     <View style={styles.row}>
   <PlusMinusButton/>
-  <Storage_day_value2 id ={id} month ={month} year ={year} />
+  <Storage_day_value2 />
   
     </View>
 

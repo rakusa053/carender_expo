@@ -2,13 +2,12 @@
 import * as SQLite from "expo-sqlite";
 import { create } from "zustand";
 
-type  DBstate ={
+type  DBstate ={//DBstate = 「データベース管理ストアの構造」
 db:any;
 initDB:()=>Promise<void>;//promiseは非同期関数という意味
-
 };
 
-export const useDBStore = create<DBstate>((set)=>({
+export const createmoneytable = create<DBstate>((set)=>({//実際に作られた Zustand ストアそのもの
     db:null,//初期値最初はない
     initDB:async()=>{//initの関数の内容を定義している
             const database = await SQLite.openDatabaseAsync("mydb.db");

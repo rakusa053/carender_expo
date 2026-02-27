@@ -1,7 +1,7 @@
 //保存ボタン関係
 
-import { InputvalueStore } from "@/stores/inputvalue";
-import { Savevalue } from "@/stores/savevalue";
+import { InputvalueStore } from "@/stores/input-value";
+import { Savevalue } from "@/stores/save-value";
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 type Props ={

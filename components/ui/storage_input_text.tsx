@@ -1,23 +1,13 @@
-// components/ui/storage_input_text.tsx　
-import { useDBStore } from "@/stores/createmoneytabale";
-import { InputvalueStore } from "@/stores/inputvalue";
+// components/ui/storage_input_text.tsx
+import { createmoneytable } from "@/stores/create-money-table";
+import { InputvalueStore } from "@/stores/input-value";
 import React, { useEffect } from "react";
-import { StyleSheet, Text, TextInput, View } from 'react-native';
+import { StyleSheet, Text, TextInput, View } from "react-native";
 
-type Props = {
-  id: string;
-  month: string;
-  year: string;
-};
-
-export default function Storage_day_value2({
-  id,
-  month,
-  year,
-}: Props) {
+export default function Storage_day_value2() {
   // UI更新のため念のため監視
   console.log("hook 1: initDB");
-  const initDB = useDBStore((s) => s.initDB);
+  const initDB = createmoneytable((s) => s.initDB);
   console.log("hook 2: initDB");
   const name = InputvalueStore((s) => s.name);
   console.log("hook 3: initDB");
